@@ -2,7 +2,7 @@
 
 /**
  * Entité Article, un article est défini par les champs
- * id, id_user, title, content, date_creation, date_update
+ * id, id_user, title, content, date_creation, date_update, nombre de vues, nombre de commentaires
  */
  class Article extends AbstractEntity 
  {
@@ -11,6 +11,8 @@
     private string $content = "";
     private ?DateTime $dateCreation = null;
     private ?DateTime $dateUpdate = null;  
+    private int $nbViews = 0;
+    private int $nbComments = 0;  
 
     /**
      * Setter pour l'id de l'utilisateur. 
@@ -109,7 +111,7 @@
      * @param string $format : le format pour la convertion de la date si elle est une string.
      * Par défaut, c'est le format de date mysql qui est utilisé.
      */
-    public function setDateUpdate(string|DateTime $dateUpdate, string $format = 'Y-m-d H:i:s') : void 
+    public function setDateUpdate(string|DateTime|null $dateUpdate, string $format = 'Y-m-d H:i:s') : void 
     {
         if (is_string($dateUpdate)) {
             $dateUpdate = DateTime::createFromFormat($format, $dateUpdate);
@@ -127,4 +129,41 @@
     {
         return $this->dateUpdate;
     }
+
+        /**
+     * Setter pour le nombre de vues.
+     * @param int $nbViews
+     */
+    public function setViewCount(int $nbViews) : void
+    {
+        $this->nbViews = $nbViews;
+    }
+
+    /**
+     * Getter pour le nombre de vues.
+     * @return int
+     */
+    public function getViewCount() : int
+    {
+        return $this->nbViews;
+    }
+
+     /**
+     * Setter pour le nombre de commentaires.
+     * @param int $nbComments
+     */
+    public function setNbComments(int $nbComments) : void
+    {
+        $this->nbComments = $nbComments;
+    }
+
+    /**
+     * Getter pour le nombre de commentaires.
+     * @return int
+     */
+    public function getNbComments() : int
+    {
+        return $this->nbComments;
+    }
+
  }

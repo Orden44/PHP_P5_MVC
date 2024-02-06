@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emilie Forteroche</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://kit.fontawesome.com/fd12a3a6d1.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -25,6 +26,9 @@
             <?php 
                 // Si on est connecté, on affiche le bouton de déconnexion, sinon, on affiche le bouton de connexion : 
                 if (isset($_SESSION['user'])) {
+                    echo '<a href="index.php?action=monitoringPage">Ciblage</a>';
+                    echo '<a href="index.php?action=commentsPage">Commentaires</a>';
+                    echo '<a href="index.php?action=admin">Edition</a>';
                     echo '<a href="index.php?action=disconnectUser">Déconnexion</a>';
                 }
                 ?>

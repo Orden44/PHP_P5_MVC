@@ -92,4 +92,44 @@ class ArticleManager extends AbstractEntityManager
         $sql = "DELETE FROM article WHERE id = :id";
         $this->db->query($sql, ['id' => $id]);
     }
+
+    /**
+     * Mise à jour du nombre de vues d'un article.
+     * @param int $id : l'id de l'article.
+     * @return void
+     */ 
+    public function updateNbViews(int $id) : void
+    {
+        $sql = "UPDATE article SET view_count = view_count + 1 WHERE id = :id";
+        $this->db->query($sql, ['id' => $id]);
+    }
+
+    /**
+     * Mise à jour du nombre de commentaires d'un article.
+     * @param int $id : l'id de l'article.
+     * @return void
+     */
+    public function updateNbComments(int $id) : void
+    {
+        $sql = "UPDATE article SET nb_comments = nb_comments + 1 WHERE id = :id";
+        $this->db->query($sql, ['id' => $id]);
+    }
+
+    /**
+     *  Récupère tous les article triés par un attribut
+     * @param string $column : l'attribut par lequel on trie, la date de création par défaut.
+     * @param string $order : ordre de tri
+     * @return array : un tableau d'objets Article.
+     */
+    public function getSortedArticles($column, $order) : array
+    {
+        $sql = "SELECT * FROM article ORDER BY $column $order";
+        $result = $this->db->query($sql);
+
+        $articles = [];
+        while ($article = $result->fetch()) {
+            $articles[] = new Article($article);
+        }
+        return $articles;
+    }
 }

@@ -24,6 +24,81 @@ class AdminController {
             'articles' => $articles
         ]);
     }
+    
+    public function showMonitoring(): void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        $this->checkIfUserIsConnected();     
+
+        // Définir les colonnes du tableau et leur titres
+        $columns = ['title', 'view_count', 'nb_comments', 'date_creation'];
+        $columnTitles = str_replace($columns, ['Titre', 'Vues', 'Commentaires', 'Date création'], $columns);
+
+        // Définir l'ordre de tri pour la requête SQL, descendante par défaut
+        $sortOrderQuery = strtoupper(Utils::request('order', 'desc', ['asc', 'desc']));
+
+        // Définir la colonne de tri pour la requête SQL (date de création par défaut)
+        $sortColumn = Utils::request('column', 'date_creation', $columns);
+
+        // Changer l'ordre de tri par click
+        $sortOrderUrl = $sortOrderQuery == 'ASC' ? 'desc' : 'asc';
+        
+
+        // On récupère les articles.
+        $articleManager = new ArticleManager();
+        // $articles = $articleManager->getAllArticles();
+        $articlesSorted = $articleManager->getSortedArticles($sortColumn, $sortOrderQuery);
+
+
+        // On affiche la page d'administration.
+        $view = new View("Administration");
+        $view->render("monitoringPage", [
+            'title' => 'Ciblage des articles',
+            'columns' => $columns,
+            'columnTitles' => $columnTitles,
+            'sortColumn' => $sortColumn,
+            'sortOrderQuery' => $sortOrderQuery,
+            'sortOrderUrl' => $sortOrderUrl,
+            'articlesSorted' => $articlesSorted,
+        ]);
+    }
+
+    public function showComments(): void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        $this->checkIfUserIsConnected();     
+
+        // Définir les colonnes du tableau et leur titres
+        $columns = ['article.title', 'comment.pseudo', 'comment.content', 'comment.date_creation'];
+        $columnTitles = str_replace($columns, ['Titre article', 'Pseudo', 'Commentaire', 'Date création'], $columns);
+
+        // Définir l'ordre de tri pour la requête SQL, descendante par défaut
+        $sortOrderQuery = strtoupper(Utils::request('order', 'desc', ['asc', 'desc']));
+
+        // Définir la colonne de tri pour la requête SQL (date de création par défaut)
+        $sortColumn = Utils::request('column', 'comment.date_creation', $columns);
+
+        // Changer l'ordre de tri par click
+        $sortOrderUrl = $sortOrderQuery == 'ASC' ? 'desc' : 'asc';
+        
+
+        // On récupère les commentaires.
+        $commentManager = new CommentManager();
+        $commentsSorted = $commentManager->getAllComments($sortColumn, $sortOrderQuery);
+
+
+        // On affiche la page d'administration.
+        $view = new View("Administration");
+        $view->render("commentsPage", [
+            'title' => 'Commentaires par date décroissante',
+            'columns' => $columns,
+            'columnTitles' => $columnTitles,
+            'sortColumn' => $sortColumn,
+            'sortOrderQuery' => $sortOrderQuery,
+            'sortOrderUrl' => $sortOrderUrl,
+            'commentsSorted' => $commentsSorted,
+        ]);
+    }
 
     /**
      * Vérifie que l'utilisateur est connecté.

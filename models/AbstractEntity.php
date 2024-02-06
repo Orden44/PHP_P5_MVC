@@ -44,8 +44,7 @@ abstract class AbstractEntity
     {
         $this->id = $id;
     }
-
-    
+  
     /**
      * Getter pour l'id.
      * @return int
