@@ -130,7 +130,7 @@
         return $this->dateUpdate;
     }
 
-        /**
+    /**
      * Setter pour le nombre de vues.
      * @param int $nbViews
      */
@@ -165,5 +165,4 @@
     {
         return $this->nbComments;
     }
-
  }

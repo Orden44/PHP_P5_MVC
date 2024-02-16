@@ -64,6 +64,5 @@ class DBManager
             $query->execute($params);
         }
         return $query;
-    }
-    
+    }   
 }

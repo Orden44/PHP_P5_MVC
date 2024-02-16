@@ -5,14 +5,12 @@
 ?>
 
 <h2><?= $title ?></h2>
-
 <div class="adminArticle">
     <table class="articleTable">
         <thead>
             <tr class="tableLine">
                 <?php for ($i = 0; $i < count($columns); $i++) {    
-                    // On affiche une flèche en haut ou en bas si la colonne est celle qui est triée
-                    // ou deux flèches par défaut     
+                    // On affiche une flèche en haut ou en bas si la colonne est celle qui est triée ou deux flèches par défaut     
                     if ($columns[$i] == $sortColumn) {
                         $iconClass = $sortOrderQuery == 'ASC' ? 'fa-sort-up' : 'fa-sort-down';
                     } else {

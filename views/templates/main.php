@@ -6,8 +6,8 @@
  *      $title string : le titre de la page.
  *      $content string : le contenu de la page. 
  */
-
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -43,6 +43,5 @@
     <footer>
         <p>Copyright © Emilie Forteroche 2023 - Openclassrooms - <a href="index.php?action=admin">Admin</a>
     </footer>
-
 </body>
 </html>

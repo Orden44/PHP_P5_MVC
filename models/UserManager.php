@@ -3,7 +3,6 @@
 /** 
  * Classe UserManager pour gérer les requêtes liées aux users et à l'authentification.
  */
-
 class UserManager extends AbstractEntityManager 
 {
     /**

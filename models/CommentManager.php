@@ -44,7 +44,7 @@ class CommentManager extends AbstractEntityManager
      */
     public function getAllComments($column, $order) : array
     {
-        $sql = "SELECT article.title, comment.pseudo, comment.content, comment.date_creation 
+        $sql = "SELECT comment.id, article.title, comment.pseudo, comment.content, comment.date_creation 
         FROM comment INNER JOIN article ON comment.id_article = article.id
         ORDER BY $column $order";
         $result = $this->db->query($sql);
@@ -72,14 +72,13 @@ class CommentManager extends AbstractEntityManager
     }
 
     /**
-     * Supprime un commentaire.
-     * @param Comment $comment : l'objet Comment à supprimer.
-     * @return bool : true si la suppression a réussi, false sinon.
+     * Supprime un commantaire.
+     * @param int $id : l'id du commentaire à supprimer.
+     * @return void
      */
-    public function deleteComment(Comment $comment) : bool
+    public function deleteComment(int $id) : void
     {
         $sql = "DELETE FROM comment WHERE id = :id";
-        $result = $this->db->query($sql, ['id' => $comment->getId()]);
-        return $result->rowCount() > 0;
+        $this->db->query($sql, ['id' => $id]);
     }
 }

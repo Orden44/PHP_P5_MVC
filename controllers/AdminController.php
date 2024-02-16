@@ -43,12 +43,9 @@ class AdminController {
         // Changer l'ordre de tri par click
         $sortOrderUrl = $sortOrderQuery == 'ASC' ? 'desc' : 'asc';
         
-
         // On récupère les articles.
         $articleManager = new ArticleManager();
-        // $articles = $articleManager->getAllArticles();
         $articlesSorted = $articleManager->getSortedArticles($sortColumn, $sortOrderQuery);
-
 
         // On affiche la page d'administration.
         $view = new View("Administration");
@@ -69,8 +66,8 @@ class AdminController {
         $this->checkIfUserIsConnected();     
 
         // Définir les colonnes du tableau et leur titres
-        $columns = ['article.title', 'comment.pseudo', 'comment.content', 'comment.date_creation'];
-        $columnTitles = str_replace($columns, ['Titre article', 'Pseudo', 'Commentaire', 'Date création'], $columns);
+        $columns = ['article.title', 'comment.pseudo', 'comment.content', 'comment.date_creation', 'comment.id'];
+        $columnTitles = str_replace($columns, ['Titre article', 'Pseudo', 'Commentaire', 'Date création', 'Supression commentaire'], $columns);
 
         // Définir l'ordre de tri pour la requête SQL, descendante par défaut
         $sortOrderQuery = strtoupper(Utils::request('order', 'desc', ['asc', 'desc']));
@@ -81,11 +78,9 @@ class AdminController {
         // Changer l'ordre de tri par click
         $sortOrderUrl = $sortOrderQuery == 'ASC' ? 'desc' : 'asc';
         
-
         // On récupère les commentaires.
         $commentManager = new CommentManager();
         $commentsSorted = $commentManager->getAllComments($sortColumn, $sortOrderQuery);
-
 
         // On affiche la page d'administration.
         $view = new View("Administration");
@@ -233,7 +228,6 @@ class AdminController {
         Utils::redirect("admin");
     }
 
-
     /**
      * Suppression d'un article.
      * @return void
@@ -250,5 +244,28 @@ class AdminController {
        
         // On redirige vers la page d'administration.
         Utils::redirect("admin");
+    }
+
+    /**
+     * Suppression d'un commentaire.
+     * @return void
+     */
+    public function deleteComment() : void
+    {
+        $this->checkIfUserIsConnected();
+
+        $id = Utils::request("id", -1);
+
+        // On supprime le commentaire en récupérant l'id de celui-ci.
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getCommentById($id);
+        $commentManager->deleteComment($id);
+       
+        // On diminue le nombre de commentaires de l'article du commentaire supprimé.
+        $articleManager = new ArticleManager();
+        $articleManager->diminutionNbComments($comment->getIdArticle());
+
+        // On redirige vers la page commentsPage.
+        Utils::redirect("commentsPage");
     }
 }

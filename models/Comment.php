@@ -4,7 +4,6 @@
  * Entité représentant un commentaire.
  * Avec les champs id, pseudo, content, et idArticle.
  */
- 
 class Comment extends AbstractEntity 
 {
     private int $idArticle;
@@ -111,5 +110,4 @@ class Comment extends AbstractEntity
     {
         return $this->title;
     }
-
 }
