@@ -356,11 +356,17 @@ a.info {
     text-align: center;
 }
 
-.tableLine  .submit {
+.tableLine .submit {
     background-color: var(--headerPaleColor);
     color: var(--titleColor);
     border: 2px solid;
     border-color: var(--titleColor);
+}
+
+.tableLine .submit:hover {
+    background-color: var(--titleColor);
+    color: var(--headerPaleColor);
+    border-color: var(--headerPaleColor);
 }
 
 /**
