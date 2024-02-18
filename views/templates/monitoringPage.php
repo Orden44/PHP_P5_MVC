@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($articlesSorted as $index => $article) { ?>
+            <?php foreach ($articlesSorted as $article) { ?>
                 <tr class="tableLine">
                     <td class="title"><?= $article->getTitle() ?></td>
                     <td><?= $article->getViewCount() ?></td>

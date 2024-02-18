@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($commentsSorted as $index => $comment) { ?>
+            <?php foreach ($commentsSorted as $comment) { ?>
                 <tr class="tableLine">
                     <td class="title"><?= $comment->getTitle() ?></td>
                     <td><?= $comment->getPseudo() ?></td>
